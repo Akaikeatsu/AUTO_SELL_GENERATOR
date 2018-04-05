@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class JDBSConectionTools {
 
-    private String connectString="jdbc:postgresql:";
+    private String connectString;
 
     /*El metodo Insert Tool de la clase JDBSConectionTools permitirá ingresar datos a la base de datos
     Recibe como parametros

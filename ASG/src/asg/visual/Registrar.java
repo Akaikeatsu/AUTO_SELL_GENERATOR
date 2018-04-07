@@ -1,14 +1,22 @@
 package asg.visual;
-
+import asg.tools.ValidaFormato;
 public class Registrar extends javax.swing.JDialog {
+    
+    private boolean Nombre = false,
+            ApellidoP = false,
+            ApellidoM = false,
+            Nombre_Usuario = false,
+            Password = false,
+            Email = false,
+            Direccion = false,
+            Telefono = false,
+            No_empleado = false;
 
     public Registrar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
-    int limit = 10;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -105,8 +113,8 @@ public class Registrar extends javax.swing.JDialog {
 
         user_name.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         user_name.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                user_nameKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                user_nameKeyReleased(evt);
             }
         });
         jPanel1.add(user_name);
@@ -120,8 +128,8 @@ public class Registrar extends javax.swing.JDialog {
 
         passw.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         passw.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                passwKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwKeyReleased(evt);
             }
         });
         jPanel1.add(passw);
@@ -165,8 +173,8 @@ public class Registrar extends javax.swing.JDialog {
 
         No_empl.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         No_empl.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                No_emplKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                No_emplKeyReleased(evt);
             }
         });
         jPanel1.add(No_empl);
@@ -180,8 +188,8 @@ public class Registrar extends javax.swing.JDialog {
 
         tel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         tel.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                telKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                telKeyReleased(evt);
             }
         });
         jPanel1.add(tel);
@@ -189,6 +197,11 @@ public class Registrar extends javax.swing.JDialog {
 
         registra.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registra.setText("Registrar");
+        registra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registraMouseClicked(evt);
+            }
+        });
         jPanel1.add(registra);
         registra.setBounds(570, 370, 110, 31);
 
@@ -216,46 +229,116 @@ public class Registrar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
-        if (nombre.getText().length()== limit)
-        evt.consume();
+        if(!nombre.getText().equals("")){
+            Nombre = ValidaFormato.VNombre(nombre.getText());
+            if(!ValidaFormato.VNombre(nombre.getText()))
+                    System.out.println("Nombre Invalido");
+            else
+                System.out.println("Nombre Valido");
+        }
+        CompCampos();
     }//GEN-LAST:event_nombreKeyTyped
 
     private void Apll_PKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_PKeyTyped
-        if (Apll_P.getText().length()== limit)
-        evt.consume();
+        if(!Apll_P.getText().equals("")){
+            ApellidoP = ValidaFormato.VApellido(Apll_P.getText());
+            if(!ValidaFormato.VApellido(Apll_P.getText()))
+                    System.out.println("Apellido Invalido");
+            else
+                System.out.println("Apellido Valido");
+        }
+        CompCampos();
     }//GEN-LAST:event_Apll_PKeyTyped
 
     private void Apll_MKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_MKeyTyped
-        if (Apll_M.getText().length()== limit)
-        evt.consume();
+        if(!Apll_M.getText().equals("")){
+            ApellidoM = ValidaFormato.VApellido(Apll_M.getText());
+            if(!ValidaFormato.VApellido(Apll_M.getText()))
+                    System.out.println("Apellido Invalido");
+            else
+                System.out.println("Apellido Valido");
+        }
+        CompCampos();
     }//GEN-LAST:event_Apll_MKeyTyped
+    private void user_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_user_nameKeyReleased
+        if(!user_name.getText().equals("")){
+            Nombre_Usuario = ValidaFormato.VNombre_Usuario(user_name.getText());
+            if(!ValidaFormato.VNombre_Usuario(user_name.getText()))
+                    System.out.println("Usuario Invalido");
+            else
+                System.out.println("Usuario Valido");
+        }
+        CompCampos();
+    }//GEN-LAST:event_user_nameKeyReleased
 
-    private void user_nameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_user_nameKeyTyped
-        if (user_name.getText().length()== limit)
-        evt.consume();
-    }//GEN-LAST:event_user_nameKeyTyped
-
-    private void passwKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwKeyTyped
-        if (passw.getText().length()== limit)
-        evt.consume();
-    }//GEN-LAST:event_passwKeyTyped
+    private void passwKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwKeyReleased
+        if(!passw.getText().equals("")){
+            Password = ValidaFormato.VPassword(passw.getText());
+            if(!ValidaFormato.VPassword(passw.getText()))
+                    System.out.println("Conttraseña Invalido");
+            else
+                System.out.println("Conttraseña Valido");
+        }
+        CompCampos();
+    }//GEN-LAST:event_passwKeyReleased
 
     private void emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyTyped
-        // TODO add your handling code here:
+        if(!email.getText().equals("")){
+            Email = ValidaFormato.VEmail(email.getText());
+            if(!ValidaFormato.VEmail(email.getText()))
+                    System.out.println("Email Invalido");
+            else
+                System.out.println("Email Valido");
+        }
+        CompCampos();
     }//GEN-LAST:event_emailKeyTyped
 
     private void direcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direcKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_direcKeyTyped
+        if(!direc.getText().equals("")){
+            Direccion = ValidaFormato.VDireccion(direc.getText());
+            if(!ValidaFormato.VDireccion(direc.getText()))
+                    System.out.println("Direccion Invalido");
+            else
+                System.out.println("Direccion Valido");
+        }
+        CompCampos();
+    }//GEN-LAST:event_direcKeyTyped    
 
-    private void No_emplKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_No_emplKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_No_emplKeyTyped
+    private void telKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telKeyReleased
+        if(!tel.getText().equals("")){
+            Telefono = ValidaFormato.VTelefono(tel.getText());
+            if(!ValidaFormato.VTelefono(tel.getText()))
+                    System.out.println("Telefono Invalido");
+            else
+                System.out.println("Telefono Valido");
+        }
+        CompCampos();
+    }//GEN-LAST:event_telKeyReleased
+    
+    private void No_emplKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_No_emplKeyReleased
+        if(!No_empl.getText().equals("")){
+            No_empleado = ValidaFormato.VNo_empleado(No_empl.getText());
+            if(!ValidaFormato.VNo_empleado(No_empl.getText()))
+                    System.out.println("Noempleado Invalido");
+            else
+                System.out.println("Noempleado Valido");
+        }
+        CompCampos();
+    }//GEN-LAST:event_No_emplKeyReleased
 
-    private void telKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telKeyTyped
-        if (tel.getText().length()== 9)
-        evt.consume();
-    }//GEN-LAST:event_telKeyTyped
+    private void CompCampos(){
+        if((Nombre && ApellidoP && ApellidoM && Nombre_Usuario && Password && Email && Direccion && Telefono && No_empleado)){
+            registra.setEnabled(true);
+            System.err.println("El boton debería estar activado ahora"); 
+        }else{
+            registra.setEnabled(false);
+            System.err.println("Aún hay algún error");
+        }
+    }    
+    
+    private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
+
+    }//GEN-LAST:event_registraMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

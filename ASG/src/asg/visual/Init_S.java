@@ -33,26 +33,21 @@ public class Init_S extends javax.swing.JFrame {
         jPanel2.setLayout(null);
 
         user.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        user.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                userKeyTyped(evt);
-            }
-        });
         jPanel2.add(user);
         user.setBounds(190, 150, 150, 30);
 
         passw.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        passw.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                passwKeyTyped(evt);
-            }
-        });
         jPanel2.add(passw);
         passw.setBounds(190, 210, 150, 28);
 
         Login.setBackground(new java.awt.Color(255, 255, 255));
         Login.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Login.setText("Log-In");
+        Login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginMouseClicked(evt);
+            }
+        });
         jPanel2.add(Login);
         Login.setBounds(130, 280, 90, 40);
 
@@ -98,15 +93,13 @@ public class Init_S extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyTyped
-        if (user.getText().length()== limit)
-            evt.consume();
-    }//GEN-LAST:event_userKeyTyped
-
-    private void passwKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwKeyTyped
-        if (passw.getText().length()== limit)
-            evt.consume();
-    }//GEN-LAST:event_passwKeyTyped
+    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
+        boolean UnN = user.getText().equals("");
+        boolean PnN = user.getText().equals("");
+        if((UnN && PnN) == false ){
+            
+        }
+    }//GEN-LAST:event_LoginMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

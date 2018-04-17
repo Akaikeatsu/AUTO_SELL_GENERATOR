@@ -1,5 +1,6 @@
 package asg.visual;
 import asg.tools.ValidaFormato;
+import asg.users.Usuario;
 public class Registrar extends javax.swing.JDialog {
     
     private boolean Nombre = false,
@@ -197,6 +198,7 @@ public class Registrar extends javax.swing.JDialog {
 
         registra.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         registra.setText("Registrar");
+        registra.setEnabled(false);
         registra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registraMouseClicked(evt);
@@ -232,7 +234,7 @@ public class Registrar extends javax.swing.JDialog {
         if(!nombre.getText().equals("")){
             Nombre = ValidaFormato.VNombre(nombre.getText());
             if(!ValidaFormato.VNombre(nombre.getText()))
-                    System.out.println("Nombre Invalido");
+                System.out.println("Nombre Invalido");
             else
                 System.out.println("Nombre Valido");
         }
@@ -243,7 +245,7 @@ public class Registrar extends javax.swing.JDialog {
         if(!Apll_P.getText().equals("")){
             ApellidoP = ValidaFormato.VApellido(Apll_P.getText());
             if(!ValidaFormato.VApellido(Apll_P.getText()))
-                    System.out.println("Apellido Invalido");
+                System.out.println("Apellido Invalido");
             else
                 System.out.println("Apellido Valido");
         }
@@ -254,17 +256,18 @@ public class Registrar extends javax.swing.JDialog {
         if(!Apll_M.getText().equals("")){
             ApellidoM = ValidaFormato.VApellido(Apll_M.getText());
             if(!ValidaFormato.VApellido(Apll_M.getText()))
-                    System.out.println("Apellido Invalido");
+                System.out.println("Apellido Invalido");
             else
                 System.out.println("Apellido Valido");
         }
         CompCampos();
     }//GEN-LAST:event_Apll_MKeyTyped
+    
     private void user_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_user_nameKeyReleased
         if(!user_name.getText().equals("")){
             Nombre_Usuario = ValidaFormato.VNombre_Usuario(user_name.getText());
             if(!ValidaFormato.VNombre_Usuario(user_name.getText()))
-                    System.out.println("Usuario Invalido");
+                System.out.println("Usuario Invalido");
             else
                 System.out.println("Usuario Valido");
         }
@@ -275,7 +278,7 @@ public class Registrar extends javax.swing.JDialog {
         if(!passw.getText().equals("")){
             Password = ValidaFormato.VPassword(passw.getText());
             if(!ValidaFormato.VPassword(passw.getText()))
-                    System.out.println("Conttraseña Invalido");
+                System.out.println("Conttraseña Invalido");
             else
                 System.out.println("Conttraseña Valido");
         }
@@ -286,29 +289,29 @@ public class Registrar extends javax.swing.JDialog {
         if(!email.getText().equals("")){
             Email = ValidaFormato.VEmail(email.getText());
             if(!ValidaFormato.VEmail(email.getText()))
-                    System.out.println("Email Invalido");
+                System.out.println("Email Invalido");
             else
                 System.out.println("Email Valido");
         }
         CompCampos();
     }//GEN-LAST:event_emailKeyTyped
 
-    private void direcKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direcKeyTyped
+    private void direcKeyTyped(java.awt.event.KeyEvent evt) {                               
         if(!direc.getText().equals("")){
             Direccion = ValidaFormato.VDireccion(direc.getText());
             if(!ValidaFormato.VDireccion(direc.getText()))
-                    System.out.println("Direccion Invalido");
+                System.out.println("Direccion Invalido");
             else
                 System.out.println("Direccion Valido");
         }
         CompCampos();
-    }//GEN-LAST:event_direcKeyTyped    
+    }                                  
 
     private void telKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telKeyReleased
         if(!tel.getText().equals("")){
             Telefono = ValidaFormato.VTelefono(tel.getText());
             if(!ValidaFormato.VTelefono(tel.getText()))
-                    System.out.println("Telefono Invalido");
+                System.out.println("Telefono Invalido");
             else
                 System.out.println("Telefono Valido");
         }
@@ -319,7 +322,7 @@ public class Registrar extends javax.swing.JDialog {
         if(!No_empl.getText().equals("")){
             No_empleado = ValidaFormato.VNo_empleado(No_empl.getText());
             if(!ValidaFormato.VNo_empleado(No_empl.getText()))
-                    System.out.println("Noempleado Invalido");
+                System.out.println("Noempleado Invalido");
             else
                 System.out.println("Noempleado Valido");
         }
@@ -337,7 +340,8 @@ public class Registrar extends javax.swing.JDialog {
     }    
     
     private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
-
+        Usuario NU = new Usuario(nombre.getText(), Apll_P.getText(), Apll_M.getText(), user_name.getText(), passw.getText(),email.getText(),direc.getText(),tel.getText(),No_empl.getText());
+        NU.RegistrarUsuario();
     }//GEN-LAST:event_registraMouseClicked
 
     public static void main(String args[]) {

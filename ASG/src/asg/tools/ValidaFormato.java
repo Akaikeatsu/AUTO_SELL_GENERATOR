@@ -36,4 +36,28 @@ public class ValidaFormato{
         return No_empleado.matches("[0-9]{8}");
         //En caso de coincidir devuelve True, de lo contrario devuelve False
     }
+
+    public static boolean ValidarUsuario(String Nombre_Usuario, String Password){
+        /*
+            El método Valida que determinados datos de Usuario se encuentre en la base de datos
+            Recibe como parametros el nombre de usuario y la contraseña
+            Genera la Query para buscar si los datos recibidos se encuentran/coinciden en la base de datos
+            Utiliza el método que retorna un arreglo bidimensional
+
+            ESTE METODO NO RETORNA EL VALOR EN SÍ DE LA BUSQUEDA. SOLO INDICA SI SE ENCONTRÓ
+            UNA COINCIDENCIA.
+        */
+        String SearchQuery = "SELECT * FROM Usuarios WHERE Nombre_Usuario ="+Nombre_Usuario+"&& Password="+Password;
+        boolean Match = false;
+        String [][] Compare;
+        try{
+            JDBSConectionTools JCT = new JDBSConectionTools();
+            Compare = JCT.SearchTableTool(SearchQuery);
+            Match = (!Compare[0][0].equals("")); //En caso de que la consulta no devuelva ningun valor se retorna un false que indica que no hubo ninguna coincidencia.
+            return Match;
+        }catch(Exception e){
+            System.err.println(e);
+        }
+        return Match;
+    }    
 }

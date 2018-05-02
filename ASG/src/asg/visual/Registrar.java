@@ -17,7 +17,9 @@ public class Registrar extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -197,7 +199,7 @@ public class Registrar extends javax.swing.JDialog {
         tel.setBounds(630, 300, 140, 30);
 
         registra.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        registra.setText("Registrar");
+        registra.setText("Aceptar");
         registra.setEnabled(false);
         registra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -209,6 +211,11 @@ public class Registrar extends javax.swing.JDialog {
 
         cancel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         cancel.setText("Cancelar");
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
         jPanel1.add(cancel);
         cancel.setBounds(720, 370, 110, 31);
 
@@ -229,7 +236,9 @@ public class Registrar extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /* 
+       COMIENZA VALIDACIÓN DE CAMPOS     
+    */
     private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
         if(!nombre.getText().equals("")){
             Nombre = ValidaFormato.VNombre(nombre.getText());
@@ -328,8 +337,20 @@ public class Registrar extends javax.swing.JDialog {
         }
         CompCampos();
     }//GEN-LAST:event_No_emplKeyReleased
+    /* 
+        TERMINA VALIDACIÓN DE CAMPOS     
 
+        En cada campo, se comprueba que el valor que éste contenga coincida con el formato indicado.
+        Para esto utiliza un método particular de la clase Valida formato. Cada campo tiene su propio método
+        El cual es el nombre del campo precedido con un "V"
+    */
     private void CompCampos(){
+        /*
+            Este método es llamado cada vez que se escribe en algún campo del formulario
+            Se comprueba si todos los campos contienen cadenas válidas.
+            En caso de que todas los campos estén llenados con cadenas que cumplan con las caracteristicas
+            se activa el boton de registrar. Si no, permanece desactivado.
+        */
         if((Nombre && ApellidoP && ApellidoM && Nombre_Usuario && Password && Email && Direccion && Telefono && No_empleado)){
             registra.setEnabled(true);
             System.err.println("El boton debería estar activado ahora"); 
@@ -338,11 +359,15 @@ public class Registrar extends javax.swing.JDialog {
             System.err.println("Aún hay algún error");
         }
     }    
-    
+
     private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
         Usuario NU = new Usuario(nombre.getText(), Apll_P.getText(), Apll_M.getText(), user_name.getText(), passw.getText(),email.getText(),direc.getText(),tel.getText(),No_empl.getText());
         NU.RegistrarUsuario();
     }//GEN-LAST:event_registraMouseClicked
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cancelActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

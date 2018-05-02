@@ -39,44 +39,69 @@ public class JDBSConectionTools {
 
     }
 
-    /*private String[] getLabelList(ResultSetMetaData temp){
-    *   int ColumnCount = temp.getColumnCount();
-    *  String[] LabelList = new String[ColumnCount-1];
-    *    try {            
-    *        int x = 0;
-    *        while((x+1)<ColumnCount){
-    *            LabelList[x] = temp.getColumnName(x+1);
-    *        }
-    *        return LabelList;
-    *    } catch (Exception e) {
-    *    }
-    *    return LabelList;
-    }*/
-
+    public String[] SearchSingleRow (String sqlquery) {
+        ResultSet MyResultSet;                          //Se declara un ResultSet y un ResultSetMetaData que se ocuparan en el procesamiento de la Query
+        ResultSetMetaData myResultSetMetaData; 
+        String [] Data;
+        try {            
+            Connection LC = ConnectionTool();
+            Statement MyStatement = LC.createStatement();
+            MyResultSet = MyStatement.executeQuery(sqlquery); // Se ejecuta la Query y se almancena en el ResultSet
+            myResultSetMetaData = MyResultSet.getMetaData(); // Se obtienen los metadatos del ResultSet
+            int ColumNum = myResultSetMetaData.getColumnCount(); // De los metadatos se obtiene el número de columnas que conforma el ResultSet
+            Data = new String[ColumNum];
+            for (int i = 1; i < ColumNum; i++) {//Controla el número de Columnas de cada Fila.
+                Data[i-1] = MyResultSet.getString(i); //Almacena el Resultado en una tabla en el orden de columna por columna que cada fila.
+            }
+            return Data;
+        } catch (Exception e) {
+            /* 
+                Si se genera un error de cualquier tipo el arreglo de crea de dimensiones 1x1 de tal manera y se le asigna
+                el valor "" para indicar que no se recuperó el resultado de la Query sin indicar el tipo del error.
+            */
+            System.err.println(e);
+            JOptionPane.showMessageDialog(null, e);
+            Data = new String[1]; 
+            Data[0] = "";
+            return Data;
+        }
+    } 
 
     public String[][] SearchTableTool (String sqlquery)
-    {//El método retorna un booleano, el cual nos indicará si se llevó a cabo la operación
-        ResultSet MyResultSet;
-        ResultSetMetaData myResultSetMetaData;
-        String[][] Data;
+    {//El método retorna un arreglo bidimencional de n x n, el cual contiene el numero de filas y columnas correspondientes a los resultados de la consulta.
+        ResultSet MyResultSet;                          //Se declara un ResultSet y un ResultSetMetaData que se ocuparan en el procesamiento de la Query
+        ResultSetMetaData myResultSetMetaData;          //A su vez se declara un arreglo Bidimensional de tipo String que almacenará los datos obtenidos de la Query
+        String[][] Data;                                //
         try {
             Connection LC = ConnectionTool();
             Statement MyStatement = LC.createStatement();
-            MyResultSet = MyStatement.executeQuery(sqlquery);
-            myResultSetMetaData = MyResultSet.getMetaData();
-            int ColumNum = myResultSetMetaData.getColumnCount();
-            int RowNum = getRowCount(MyResultSet);
-            Data = new String[RowNum][ColumNum];
-            for (int i = 1; i < RowNum; i++) {
-                for (int j = 1; i < ColumNum; i++) {
-                    Data[i][j] = MyResultSet.getString(j);
+            MyResultSet = MyStatement.executeQuery(sqlquery); // Se ejecuta la Query y se almancena en el ResultSet
+            myResultSetMetaData = MyResultSet.getMetaData(); // Se obtienen los metadatos del ResultSet
+            int ColumNum = myResultSetMetaData.getColumnCount(); // De los metadatos se obtiene el número de columnas que conforma el ResultSet
+            int RowNum = getRowCount(MyResultSet); // Se llama al método getRowCount el cual obtiene el número de filas que contiene el ResultSet
+
+            if((RowNum==0) || (ColumNum==0)){ 
+                int z = 0/0;                    //En caso de que alguna de las dimesiones sea igual a cero, se fuerza un error aritmetico para interrumpir el método.
+            }
+
+            Data = new String[RowNum][ColumNum]; //En caso de que ambas dimensiones sean mayores a cero, el arreglo de genera de acuerdo al número de filas y al numero de columnas, respectivamente.
+            while(MyResultSet.next()){//Mientras aún exista una fila en el ResultSet...
+                for (int i = 1; i < RowNum; i++) {//Controla el número de Filas
+                    for (int j = 1; i < ColumNum; i++) {//Controla el número de Columnas de cada Fila.
+                        Data[i-1][j-1] = MyResultSet.getString(j); //Almacena el Resultado en una tabla en el orden de columna por columna que cada fila.
+                    }
                 }
             }
-            return Data;
+            return Data; //Se retorna el arreglo con los datos del ResultSet
         } catch (SQLException e) {
+            /* 
+                Si se genera un error de cualquier tipo el arreglo de crea de dimensiones 1x1 de tal manera y se le asigna
+                el valor "" para indicar que no se recuperó el resultado de la Query sin indicar el tipo del error.
+            */
+            System.err.println(e);
             JOptionPane.showMessageDialog(null, e);
-            Data = new String[1][1];
-            Data[0][0] = "Error "+e;
+            Data = new String[1][1]; 
+            Data[0][0] = "";
             return Data;
         }        
     }
@@ -98,7 +123,8 @@ public class JDBSConectionTools {
     El método ConnectionTool se encarga de generar una conexion con la base de datos
     Retorna un Connection
     */
-    private Connection ConnectionTool (){
+    public Connection ConnectionTool (){ // Ofrece una manera de acceder a la base de datos que sea necesario en el momento. 
+                                         // Dado que se accede a la base de datos de la aplicación y a la de la empresa.
         String connectString = "jdbc:postgresql:"+RecoverDirection();
         String user = RecoverUser();
         String pass = RecoverPass();

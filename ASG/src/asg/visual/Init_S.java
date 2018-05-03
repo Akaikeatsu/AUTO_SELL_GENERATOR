@@ -1,6 +1,11 @@
 
 package asg.visual;
 
+import asg.tools.ValidaFormato;
+import asg.users.Usuario;
+import javax.swing.JOptionPane;
+
+
 
 public class Init_S extends javax.swing.JFrame {
 
@@ -33,32 +38,32 @@ public class Init_S extends javax.swing.JFrame {
         jPanel2.setLayout(null);
 
         user.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        user.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                userKeyTyped(evt);
-            }
-        });
         jPanel2.add(user);
         user.setBounds(190, 150, 150, 30);
 
         passw.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        passw.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                passwKeyTyped(evt);
-            }
-        });
         jPanel2.add(passw);
         passw.setBounds(190, 210, 150, 28);
 
         Login.setBackground(new java.awt.Color(255, 255, 255));
         Login.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         Login.setText("Log-In");
+        Login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LoginMouseClicked(evt);
+            }
+        });
         jPanel2.add(Login);
         Login.setBounds(130, 280, 90, 40);
 
         registra.setBackground(new java.awt.Color(255, 255, 255));
         registra.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         registra.setText("Registrar");
+        registra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registraMouseClicked(evt);
+            }
+        });
         jPanel2.add(registra);
         registra.setBounds(120, 350, 113, 40);
 
@@ -98,15 +103,23 @@ public class Init_S extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void userKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_userKeyTyped
-        if (user.getText().length()== limit)
-            evt.consume();
-    }//GEN-LAST:event_userKeyTyped
+    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
+        boolean UnN = user.getText().equals(""); //Comprueba si el campo User está vacio
+        boolean PnN = passw.getAccessibleContext().equals(""); // Comprueba si el campo password está vacio.
+        if((UnN && PnN) == false ){ //Si ambos están diferentes de vacio entra al if
+            if(ValidaFormato.ValidarUsuario(user.getText(), passw.getText())){//Se ejecuta el método Validar Usuario el cual devuelve un True si encuentra algún Match en la base de datos, devuelve un False en caso contrario.          
+                JOptionPane.showMessageDialog(null, "Generando sesion de usuario");//En caso de encontrar un Match en la base de datos. Genera una sesión de Generar Orden con los Datos del Usuario. WIP
+                Usuario Temp = new Usuario(user.getText(), passw.getText());
+                Orden GenOrTemp = new Orden(Temp);
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Los datos no coinciden con ningún usuario registrado");//En caso de no encontrar un Match en la base de datos. Solamente regresa al menú de login
+        }
+    }//GEN-LAST:event_LoginMouseClicked
 
-    private void passwKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwKeyTyped
-        if (passw.getText().length()== limit)
-            evt.consume();
-    }//GEN-LAST:event_passwKeyTyped
+    private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
+        Registrar ReNuUs = new Registrar(this, rootPaneCheckingEnabled);
+    }//GEN-LAST:event_registraMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -125,11 +125,12 @@ public class JDBSConectionTools {
     */
     public Connection ConnectionTool (){ // Ofrece una manera de acceder a la base de datos que sea necesario en el momento. 
                                          // Dado que se accede a la base de datos de la aplicación y a la de la empresa.
-        String connectString = "jdbc:postgresql:"+RecoverDirection();
+        /*String connectString = "jdbc:postgresql:"+RecoverDirection();
         String user = RecoverUser();
-        String pass = RecoverPass();
+        String pass = RecoverPass();*/
         try {
-            MyConnection = DriverManager.getConnection(connectString, user, pass);
+            /*MyConnection = DriverManager.getConnection(connectString, user, pass);*/
+            MyConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ASG_DB","postgres","no32sdc1");
         } catch (Exception e) {
         }
         return MyConnection;

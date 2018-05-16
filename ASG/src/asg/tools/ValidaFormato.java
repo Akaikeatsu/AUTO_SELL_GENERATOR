@@ -1,5 +1,8 @@
 package asg.tools;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.regex.*;
 
 public class ValidaFormato{
@@ -47,13 +50,17 @@ public class ValidaFormato{
             ESTE METODO NO RETORNA EL VALOR EN SÍ DE LA BUSQUEDA. SOLO INDICA SI SE ENCONTRÓ
             UNA COINCIDENCIA.
         */
-        String SearchQuery = "SELECT * FROM Usuarios WHERE Nombre_Usuario ="+Nombre_Usuario+"&& Password="+Password;
+        String SearchQuery = "SELECT * FROM usuario WHERE nombre_usuario = '"+Nombre_Usuario+"' AND password='"+Password+"'";
         boolean Match = false;
-        String [][] Compare;
+        int x = 0;
         try{
             JDBSConectionTools JCT = new JDBSConectionTools();
-            Compare = JCT.SearchTableTool(SearchQuery);
-            Match = (!Compare[0][0].equals("")); //En caso de que la consulta no devuelva ningun valor se retorna un false que indica que no hubo ninguna coincidencia.
+            Connection LC = JCT.ConnectionTool();
+            Statement MyStatement = LC.createStatement();
+            ResultSet MyResultSet = MyStatement.executeQuery(SearchQuery);
+            while(MyResultSet.next()){
+                Match = true;
+            }
             return Match;
         }catch(Exception e){
             System.err.println(e);

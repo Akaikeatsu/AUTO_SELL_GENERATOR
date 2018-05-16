@@ -181,7 +181,7 @@ public class Registrar extends javax.swing.JDialog {
             }
         });
         jPanel1.add(No_empl);
-        No_empl.setBounds(630, 240, 80, 30);
+        No_empl.setBounds(630, 240, 140, 30);
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));

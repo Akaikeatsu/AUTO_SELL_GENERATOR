@@ -1,4 +1,6 @@
 package asg.visual;
+import javax.swing.JOptionPane;
+
 import asg.tools.ValidaFormato;
 import asg.users.Usuario;
 public class Registrar extends javax.swing.JDialog {
@@ -236,9 +238,11 @@ public class Registrar extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     /* 
        COMIENZA VALIDACIÓN DE CAMPOS     
     */
+
     private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
         if(!nombre.getText().equals("")){
             Nombre = ValidaFormato.VNombre(nombre.getText());
@@ -362,7 +366,13 @@ public class Registrar extends javax.swing.JDialog {
 
     private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
         Usuario NU = new Usuario(nombre.getText(), Apll_P.getText(), Apll_M.getText(), user_name.getText(), passw.getText(),email.getText(),direc.getText(),tel.getText(),No_empl.getText());
-        NU.RegistrarUsuario();
+        try {
+            NU.RegistrarUsuario();
+            JOptionPane.showMessageDialog(null, "Se regristró correctamente el Usuario");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "");
+        }
+        
     }//GEN-LAST:event_registraMouseClicked
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed

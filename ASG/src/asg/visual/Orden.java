@@ -7,10 +7,7 @@ public class Orden extends javax.swing.JFrame {
     public Orden() {
         initComponents();
         this.setLocationRelativeTo(null);
-    }
-    public Orden(Usuario Temp){
-        initComponents();
-        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")

@@ -104,13 +104,15 @@ public class Init_S extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
+        char[] arrayC = passw.getPassword(); 
+        String pass = new String(arrayC);
+        System.out.println(pass);
         boolean UnN = user.getText().equals(""); //Comprueba si el campo User está vacio
-        boolean PnN = passw.getAccessibleContext().equals(""); // Comprueba si el campo password está vacio.
-        if((UnN && PnN) != false ){ //Si ambos están diferentes de vacio entra al if
-            if(ValidaFormato.ValidarUsuario(user.getText(), passw.getText())){//Se ejecuta el método Validar Usuario el cual devuelve un True si encuentra algún Match en la base de datos, devuelve un False en caso contrario.          
+        boolean PnN = pass.equals(""); // Comprueba si el campo password está vacio.
+        if((UnN && PnN) == false ){ //Si ambos están diferentes de vacio entra al if
+            if(ValidaFormato.ValidarUsuario(user.getText(), pass)){//Se ejecuta el método Validar Usuario el cual devuelve un True si encuentra algún Match en la base de datos, devuelve un False en caso contrario.          
                 JOptionPane.showMessageDialog(null, "Generando sesion de usuario");//En caso de encontrar un Match en la base de datos. Genera una sesión de Generar Orden con los Datos del Usuario. WIP
-                Usuario Temp = new Usuario(user.getText(), passw.getText());
-                Orden GenOrTemp = new Orden(Temp);
+                Orden GenOrTemp = new Orden();
             }
             else
                 JOptionPane.showMessageDialog(null, "Los datos no coinciden con ningún usuario registrado");//En caso de no encontrar un Match en la base de datos. Solamente regresa al menú de login

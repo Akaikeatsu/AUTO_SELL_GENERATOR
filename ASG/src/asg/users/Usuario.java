@@ -26,7 +26,7 @@ public class Usuario {
         this.No_empleado =Integer.parseInt(No_empleado);
     }
 
-    public Usuario (String Nombre_Usuario, String Password){
+    public Usuario (String Usuario, String Password){
         /**
          * Este constructor recibe como parametro el nombre del usuario y el password. 
          * El método se ejecuta despues de validar que exista alguna coincidencia con estos datos en la base de datos
@@ -35,8 +35,8 @@ public class Usuario {
          */
 
         JDBSConectionTools JCB = new JDBSConectionTools();
-        String sqlquery = "SELECT * FROM USUARIOS WHERE nombre_usuario="+Nombre_Usuario+" AND password="+Password;
-         String Datos [] = JCB.SearchSingleRow(sqlquery);
+        String sqlquery = "SELECT * FROM usuario WHERE nombre_usuario = '"+Usuario+"' AND password = '"+Password+"'";
+        String Datos [] = JCB.SearchSingleRow(sqlquery);
         this.Nombre = Datos [0];
         this.ApellidoP = Datos [1];
         this.ApellidoM = Datos [2];
@@ -53,7 +53,7 @@ public class Usuario {
             El método registra el Usuario en la base de datos
             Llama al método QueryTool de la clase JDBSConectionTools el cual recibe como parametro la instrucción SQL de inserción    
         */
-        String insertquery = "INSERT INTO Usuario(Nombre, Apellido_Paterno, Apellido_Materno, Nombre_Usuario, Password, Email, Dirección, No_empleado, Telefono) VALUES ("+Nombre+","+ApellidoP+","+ApellidoM+","+Nombre_Usuario+","+Password+","+Email+","+Direccion+","+Telefono+","+No_empleado+")";
+        String insertquery = "INSERT INTO Usuario(nombre, apellido_paterno, apellido_materno, nombre_usuario, password, email, dirección, tel, no_empleado) VALUES ('"+Nombre+"', '"+ApellidoP+"', '"+ApellidoM+"','"+Nombre_Usuario+"', '"+Password+"', '"+Email+"', '"+Direccion+"', '"+Telefono+"', "+No_empleado+")";
         JDBSConectionTools JCT = new JDBSConectionTools();
         JCT.QueryTool(insertquery);
     }

@@ -61,6 +61,7 @@ public class ValidaFormato{
             while(MyResultSet.next()){
                 Match = true;
             }
+            LC.close();
             return Match;
         }catch(Exception e){
             System.err.println(e);

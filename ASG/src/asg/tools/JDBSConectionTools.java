@@ -105,34 +105,18 @@ public class JDBSConectionTools {
             return Data;
         }        
     }
-
-    private  String RecoverDirection(){
-        //Recuperará la dirección de la base de datos de un archivo de configuración
-        return "";
-    }    
-    private  String RecoverUser(){
-        //Recuperará el usuario de la base de datos de un archivo de configuración
-        return "";
-    }
-    private  String RecoverPass(){
-        //Recuperará la contraseña de la base de datos de un archivo de configuración
-        return "";
-    }
-
     /*
     El método ConnectionTool se encarga de generar una conexion con la base de datos
     Retorna un Connection
     */
-    public Connection ConnectionTool (){ // Ofrece una manera de acceder a la base de datos que sea necesario en el momento. 
-                                         // Dado que se accede a la base de datos de la aplicación y a la de la empresa.
-        /*String connectString = "jdbc:postgresql:"+RecoverDirection();
-        String user = RecoverUser();
-        String pass = RecoverPass();*/
+    public Connection ConnectionTool (){
         try {
             /*MyConnection = DriverManager.getConnection(connectString, user, pass);*/
-            MyConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ASG_DB","postgres","no32sdc1");
+            MyConnection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ASG","postgres","Mishibonito");
         } catch (Exception e) {
+            System.err.println("Error al conectar con la base de datos");
         }
         return MyConnection;
     }
+
 }

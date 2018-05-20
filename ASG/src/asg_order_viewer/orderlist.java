@@ -131,7 +131,7 @@ public class orderlist extends javax.swing.JFrame {
         for(int c=0; c<colum.length;c++){ /*Iniciamos un ciclo en el que añadiremos cada columna al modelo de la tabla*/
             model.addColumn(colum[c]);    /*En cada vuelta se añade una columna*/
         }
-        String data[] = new String[6];    /*Creamos un array que no servira para colocar los datos de una tupla para la tabla. El tamaño de array esa determinado por el número de columnas de la tabla*/
+        String data[] = new String[6];    /*Creamos un array que nos servira para colocar los datos de una tupla para la tabla. El tamaño de array esa determinado por el número de columnas de la tabla*/
         Statement st, st2;                /*Declaramos 2 nuevos Statement que nos servirar para 3 consultas, el primero para la informacion del pedido y el segundo para informacion adicional del cliente y el conductor, que no se encuentra en la tabla de ordenes*/
         ResultSet rs1, rs2, rs3;          /*Creamos los resultadados que almacenaran lo obtenido de las consulltas*/
         try {

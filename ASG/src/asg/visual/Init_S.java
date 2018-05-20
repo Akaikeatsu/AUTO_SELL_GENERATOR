@@ -1,8 +1,15 @@
 
 package asg.visual;
 
+import asg.tools.JDBSConectionTools;
 import asg.tools.ValidaFormato;
 import asg.users.Usuario;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -12,9 +19,8 @@ public class Init_S extends javax.swing.JFrame {
     public Init_S() {
         initComponents();
         this.setLocationRelativeTo(null);
+        this. setVisible(true);
     }
-
-    int limit=10;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -109,10 +115,23 @@ public class Init_S extends javax.swing.JFrame {
         System.out.println(pass);
         boolean UnN = user.getText().equals(""); //Comprueba si el campo User está vacio
         boolean PnN = pass.equals(""); // Comprueba si el campo password está vacio.
+        String no_empleado = "";
         if((UnN && PnN) == false ){ //Si ambos están diferentes de vacio entra al if
             if(ValidaFormato.ValidarUsuario(user.getText(), pass)){//Se ejecuta el método Validar Usuario el cual devuelve un True si encuentra algún Match en la base de datos, devuelve un False en caso contrario.          
-                JOptionPane.showMessageDialog(null, "Generando sesion de usuario");//En caso de encontrar un Match en la base de datos. Genera una sesión de Generar Orden con los Datos del Usuario. WIP
-                Orden GenOrTemp = new Orden();
+                JOptionPane.showMessageDialog(null, "Generando sesion de usuario");//En caso de encontrar un Match en la base de datos. Genera una sesión de Generar Orden_acto_one con los Datos del Usuario. WIP
+                JDBSConectionTools CT = new JDBSConectionTools();                
+                try {
+                    Connection cn = CT.ConnectionTool();
+                    Statement st = cn.createStatement();
+                    ResultSet rs1 = st.executeQuery("SELECT no_empleado FROM usuario WHERE nombre_usuario = '"+user.getText()+"' AND password = '"+pass+"'");
+                    while(rs1.next())
+                        no_empleado =rs1.getString(1);
+                    System.err.println(no_empleado);
+                    Orden_acto_one GenOrTemp = new Orden_acto_one(no_empleado);
+                this.dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Init_S.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             else
                 JOptionPane.showMessageDialog(null, "Los datos no coinciden con ningún usuario registrado");//En caso de no encontrar un Match en la base de datos. Solamente regresa al menú de login

@@ -1,8 +1,9 @@
 package asg.visual;
 import asg.tools.ValidaFormato;
 import asg.users.Usuario;
+import java.awt.Color;
 public class Registrar extends javax.swing.JDialog {
-    
+
     private boolean Nombre = false,
             ApellidoP = false,
             ApellidoM = false,
@@ -65,8 +66,8 @@ public class Registrar extends javax.swing.JDialog {
 
         nombre.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         nombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                nombreKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nombreKeyReleased(evt);
             }
         });
         jPanel1.add(nombre);
@@ -80,8 +81,8 @@ public class Registrar extends javax.swing.JDialog {
 
         Apll_P.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         Apll_P.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Apll_PKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Apll_PKeyReleased(evt);
             }
         });
         jPanel1.add(Apll_P);
@@ -95,8 +96,8 @@ public class Registrar extends javax.swing.JDialog {
 
         Apll_M.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         Apll_M.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                Apll_MKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Apll_MKeyReleased(evt);
             }
         });
         jPanel1.add(Apll_M);
@@ -146,8 +147,8 @@ public class Registrar extends javax.swing.JDialog {
 
         email.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         email.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                emailKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                emailKeyReleased(evt);
             }
         });
         jPanel1.add(email);
@@ -161,8 +162,8 @@ public class Registrar extends javax.swing.JDialog {
 
         direc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         direc.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                direcKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                direcKeyReleased(evt);
             }
         });
         jPanel1.add(direc);
@@ -236,109 +237,145 @@ public class Registrar extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /* 
-       COMIENZA VALIDACIÓN DE CAMPOS     
+    /*
+       COMIENZA VALIDACIÓN DE CAMPOS
     */
-    private void nombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyTyped
+    private void nombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombreKeyReleased
         if(!nombre.getText().equals("")){
             Nombre = ValidaFormato.VNombre(nombre.getText());
-            if(!ValidaFormato.VNombre(nombre.getText()))
+            if(!ValidaFormato.VNombre(nombre.getText())){
                 System.out.println("Nombre Invalido");
-            else
+                nombre.setBackground(Color.red);
+            }else{
                 System.out.println("Nombre Valido");
-        }
+                nombre.setBackground(Color.green);
+            }
+        }else
+            nombre.setBackground(Color.white);
         CompCampos();
-    }//GEN-LAST:event_nombreKeyTyped
+    }//GEN-LAST:event_nombreKeyReleased
 
-    private void Apll_PKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_PKeyTyped
+    private void Apll_PKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_PKeyReleased
         if(!Apll_P.getText().equals("")){
             ApellidoP = ValidaFormato.VApellido(Apll_P.getText());
-            if(!ValidaFormato.VApellido(Apll_P.getText()))
+            if(!ValidaFormato.VApellido(Apll_P.getText())){
                 System.out.println("Apellido Invalido");
-            else
+                Apll_P.setBackground(Color.red);
+            }else{
                 System.out.println("Apellido Valido");
-        }
+                Apll_P.setBackground(Color.green);
+            }
+        }else
+            Apll_P.setBackground(Color.white);
         CompCampos();
-    }//GEN-LAST:event_Apll_PKeyTyped
+    }//GEN-LAST:event_Apll_PKeyReleased
 
-    private void Apll_MKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_MKeyTyped
+    private void Apll_MKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Apll_MKeyReleased
         if(!Apll_M.getText().equals("")){
             ApellidoM = ValidaFormato.VApellido(Apll_M.getText());
-            if(!ValidaFormato.VApellido(Apll_M.getText()))
+            if(!ValidaFormato.VApellido(Apll_M.getText())){
                 System.out.println("Apellido Invalido");
-            else
+                Apll_M.setBackground(Color.red);
+            }else{
                 System.out.println("Apellido Valido");
-        }
+                Apll_M.setBackground(Color.green);
+            }
+        }else
+            Apll_M.setBackground(Color.white);
         CompCampos();
-    }//GEN-LAST:event_Apll_MKeyTyped
-    
+    }//GEN-LAST:event_Apll_MKeyReleased
+
     private void user_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_user_nameKeyReleased
         if(!user_name.getText().equals("")){
             Nombre_Usuario = ValidaFormato.VNombre_Usuario(user_name.getText());
-            if(!ValidaFormato.VNombre_Usuario(user_name.getText()))
+            if(!ValidaFormato.VNombre_Usuario(user_name.getText())){
                 System.out.println("Usuario Invalido");
-            else
+                user_name.setBackground(Color.red);
+            }else{
                 System.out.println("Usuario Valido");
-        }
+                user_name.setBackground(Color.green);
+            }
+        }else
+            user_name.setBackground(Color.white);
         CompCampos();
     }//GEN-LAST:event_user_nameKeyReleased
 
     private void passwKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwKeyReleased
         if(!passw.getText().equals("")){
             Password = ValidaFormato.VPassword(passw.getText());
-            if(!ValidaFormato.VPassword(passw.getText()))
+            if(!ValidaFormato.VPassword(passw.getText())){
                 System.out.println("Conttraseña Invalido");
-            else
+                passw.setBackground(Color.red);
+            }else{
                 System.out.println("Conttraseña Valido");
-        }
+                passw.setBackground(Color.green);
+            }
+        }else
+            passw.setBackground(Color.white);
         CompCampos();
     }//GEN-LAST:event_passwKeyReleased
 
-    private void emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyTyped
+    private void emailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyReleased
         if(!email.getText().equals("")){
             Email = ValidaFormato.VEmail(email.getText());
-            if(!ValidaFormato.VEmail(email.getText()))
+            if(!ValidaFormato.VEmail(email.getText())){
                 System.out.println("Email Invalido");
-            else
+                email.setBackground(Color.red);
+            }else{
                 System.out.println("Email Valido");
-        }
+                email.setBackground(Color.green);
+            }
+        }else
+            email.setBackground(Color.white);
         CompCampos();
-    }//GEN-LAST:event_emailKeyTyped
+    }//GEN-LAST:event_emailKeyReleased
 
-    private void direcKeyTyped(java.awt.event.KeyEvent evt) {                               
+    private void direcKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_direcKeyReleased
         if(!direc.getText().equals("")){
             Direccion = ValidaFormato.VDireccion(direc.getText());
-            if(!ValidaFormato.VDireccion(direc.getText()))
+            if(!ValidaFormato.VDireccion(direc.getText())){
                 System.out.println("Direccion Invalido");
-            else
+                direc.setBackground(Color.red);
+            }else{
                 System.out.println("Direccion Valido");
-        }
+                direc.setBackground(Color.green);
+            }
+        }else
+            direc.setBackground(Color.white);
         CompCampos();
-    }                                  
+    }//GEN-LAST:event_direcKeyReleased
 
     private void telKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telKeyReleased
         if(!tel.getText().equals("")){
             Telefono = ValidaFormato.VTelefono(tel.getText());
-            if(!ValidaFormato.VTelefono(tel.getText()))
+            if(!ValidaFormato.VTelefono(tel.getText())){
                 System.out.println("Telefono Invalido");
-            else
+                tel.setBackground(Color.red);
+            }else{
                 System.out.println("Telefono Valido");
-        }
+                tel.setBackground(Color.green);
+            }
+        }else
+            tel.setBackground(Color.white);
         CompCampos();
     }//GEN-LAST:event_telKeyReleased
-    
+
     private void No_emplKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_No_emplKeyReleased
         if(!No_empl.getText().equals("")){
             No_empleado = ValidaFormato.VNo_empleado(No_empl.getText());
-            if(!ValidaFormato.VNo_empleado(No_empl.getText()))
+            if(!ValidaFormato.VNo_empleado(No_empl.getText())){
                 System.out.println("Noempleado Invalido");
-            else
+                No_empl.setBackground(Color.red);
+            }else{
                 System.out.println("Noempleado Valido");
-        }
+                No_empl.setBackground(Color.green);
+            }
+        }else
+            No_empl.setBackground(Color.white);
         CompCampos();
     }//GEN-LAST:event_No_emplKeyReleased
-    /* 
-        TERMINA VALIDACIÓN DE CAMPOS     
+    /*
+        TERMINA VALIDACIÓN DE CAMPOS
 
         En cada campo, se comprueba que el valor que éste contenga coincida con el formato indicado.
         Para esto utiliza un método particular de la clase Valida formato. Cada campo tiene su propio método
@@ -352,61 +389,30 @@ public class Registrar extends javax.swing.JDialog {
             se activa el boton de registrar. Si no, permanece desactivado.
         */
         if((Nombre && ApellidoP && ApellidoM && Nombre_Usuario && Password && Email && Direccion && Telefono && No_empleado)){
-            registra.setEnabled(true);
-            System.err.println("El boton debería estar activado ahora"); 
+            if(!passw.getText().equals(user_name.getText())){
+                user_name.setBackground(Color.green);
+                passw.setBackground(Color.green);
+                registra.setEnabled(true);
+                System.err.println("El boton debería estar activado ahora");
+            }else{
+                user_name.setBackground(Color.red);
+                passw.setBackground(Color.red);
+            }
         }else{
             registra.setEnabled(false);
             System.err.println("Aún hay algún error");
         }
-    }    
+    }
 
     private void registraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registraMouseClicked
         Usuario NU = new Usuario(nombre.getText(), Apll_P.getText(), Apll_M.getText(), user_name.getText(), passw.getText(),email.getText(),direc.getText(),tel.getText(),No_empl.getText());
         NU.RegistrarUsuario();
+        this.dispose();
     }//GEN-LAST:event_registraMouseClicked
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         this.dispose();
     }//GEN-LAST:event_cancelActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Registrar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Registrar dialog = new Registrar(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Apll_M;

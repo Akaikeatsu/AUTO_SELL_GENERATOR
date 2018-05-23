@@ -69,11 +69,11 @@ public class orderlist extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_orders);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(0, 100, 780, 280);
+        jScrollPane1.setBounds(0, 100, 1010, 280);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Green.jpeg"))); // NOI18N
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 780, 100);
+        jLabel1.setBounds(0, 0, 1010, 100);
 
         confirm.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         confirm.setText("Confirmar Carga");
@@ -83,17 +83,17 @@ public class orderlist extends javax.swing.JFrame {
             }
         });
         jPanel1.add(confirm);
-        confirm.setBounds(570, 420, 180, 30);
+        confirm.setBounds(810, 420, 180, 30);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Green.jpeg"))); // NOI18N
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(0, 380, 780, 100);
+        jLabel2.setBounds(0, 380, 1010, 100);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,13 +127,13 @@ public class orderlist extends javax.swing.JFrame {
 
     private void getData(){ /*En este metodo cargamos la informacion de la tabla*/
         Connection cn = con.ConnectionTool(); /*Se crea un nuevo objeto de Conexión*/
-        String colum[] = {"Folio", "Cliente", "RFC", "Direccion", "Conductor", "Estado"}; /*Se determinan las columnas que podrá ver el usuario*/
+        String colum[] = {"Folio", "Cliente", "RFC", "Direccion", "Conductor","Descripcion","Estiba", "Estado"}; /*Se determinan las columnas que podrá ver el usuario*/
         for(int c=0; c<colum.length;c++){ /*Iniciamos un ciclo en el que añadiremos cada columna al modelo de la tabla*/
             model.addColumn(colum[c]);    /*En cada vuelta se añade una columna*/
         }
-        String data[] = new String[6];    /*Creamos un array que nos servira para colocar los datos de una tupla para la tabla. El tamaño de array esa determinado por el número de columnas de la tabla*/
+        String data[] = new String[8];    /*Creamos un array que nos servira para colocar los datos de una tupla para la tabla. El tamaño de array esa determinado por el número de columnas de la tabla*/
         Statement st, st2;                /*Declaramos 2 nuevos Statement que nos servirar para 3 consultas, el primero para la informacion del pedido y el segundo para informacion adicional del cliente y el conductor, que no se encuentra en la tabla de ordenes*/
-        ResultSet rs1, rs2, rs3;          /*Creamos los resultadados que almacenaran lo obtenido de las consulltas*/
+        ResultSet rs1, rs2, rs3, rs4;          /*Creamos los resultadados que almacenaran lo obtenido de las consulltas*/
         try {
             st = cn.createStatement();
             st2 = cn.createStatement();
@@ -142,15 +142,20 @@ public class orderlist extends javax.swing.JFrame {
                 data[0]=rs1.getString(1);   /*Aquí va el folio*/
                 data[2]=rs1.getString(2);   /*Aquí va el rfc del cliente */
                 data[4]=rs1.getString(3);   /*Aquí va el no. de entrada del conductor*/
-                data[5]=rs1.getString(4);   /*Aquí va el estado del pedido*/
+                data[7]=rs1.getString(4);   /*Aquí va el estado del pedido*/
                 rs2 = st2.executeQuery("SELECT nombre, destino FROM cliente WHERE rfc = '"+data[2]+"'");/*Con esta consulta obtenemos el nombre y la direccion de destino del cliente en base al rfc que obtuvimos de la consulta anterior*/
                 if(rs2.next()){
                     data[1]=rs2.getString(1);   /*Aquí va el nombre del cliente*/
                     data[3]=rs2.getString(2);   /*Aquí va la dirección de destino*/
                 }
-                rs3 = st2.executeQuery("SELECT nombre FROM conductor WHERE no_entrada = "+data[4]);/*Con esta consulta obtenemos el nombre de conductor en base a el no_de entrada obtenido en la primera consulta realizada*/
+                rs3 = st2.executeQuery("SELECT nombre FROM conductor WHERE no_entrada = '"+data[4]+"'");/*Con esta consulta obtenemos el nombre de conductor en base a el no_de entrada obtenido en la primera consulta realizada*/
                 if(rs3.next()){
                     data[4]=rs3.getString(1);   /*Aqui va el nomre del conductor*/
+                }
+                rs4 = st2.executeQuery("SELECT descripcion, estiba FROM producto WHERE folio IN (SELECT productofolio FROM public.orden_de_pedido_producto WHERE orden_de_pedidofolio = '"+data[0]+"')");
+                if(rs4.next()){
+                    data[5]=rs4.getString(1);   /*Aqui va el nomre del conductor*/
+                    data[6]=rs4.getString(2);   /*Aqui va el nomre del conductor*/
                 }
                 model.addRow(data); /*Añadimos el vector construido como una nueva tupla en nustro modelo*/
             }

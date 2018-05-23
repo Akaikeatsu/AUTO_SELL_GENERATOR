@@ -26,30 +26,6 @@ public class Conductor {
     this.No_Numero_Placa = No_Numero_Placa;
     }
     
-    public void ImprimirDatos(){
-        System.err.println(this.Nombre+" "+this.Linea_Transportista+" "+ this.No_Entrada+" "+this.No_Ticket_Bascula+" "+this.No_Numero_Placa);
-    }
-
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
-    }
-
-    public void setLinea_Transportista(String Linea_Transportista) {
-        this.Linea_Transportista = Linea_Transportista;
-    }
-
-    public void setNo_Entrada(String No_Entrada) {
-        this.No_Entrada = No_Entrada;
-    }
-
-    public void setNo_Ticket_Bascula(String No_Ticket_Bascula) {
-        this.No_Ticket_Bascula = No_Ticket_Bascula;
-    }
-
-    public void setNo_Numero_Placa(String No_Numero_Placa) {
-        this.No_Numero_Placa = No_Numero_Placa;
-    }
-    
     public boolean RegristarConductor(){
         try {
             JDBSConectionTools CT = new JDBSConectionTools();

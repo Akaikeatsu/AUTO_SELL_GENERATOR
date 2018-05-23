@@ -17,13 +17,18 @@ public class Order_acto_two extends javax.swing.JDialog {
     private final String Num_Empleado;
     
     public Order_acto_two(java.awt.Frame parent, boolean modal, Cliente T1, Conductor T2, Orden T3,String Num_Empleado) {
+        /**
+         * Método constructor que recibe como parametro
+         * Un objeto de tipo cliente
+         * Un objeto de tipo conductor
+         * Un objeto de tipo Orden
+         * Un String que contiene el numero de empleado que genera la orden
+         * Se almacena en variables locales.
+         */
         super(parent, modal);
-        C1= T1;
-        C1.ImprimirDatos();
+        C1=T1;
         C2=T2;
-        C2.ImprimirDatos();
         C3=T3;
-        C3.ImprimirDatos();
         this.Num_Empleado = Num_Empleado;
         System.out.println(this.Num_Empleado);
         initComponents();
@@ -142,16 +147,13 @@ public class Order_acto_two extends javax.swing.JDialog {
             ResultSet rs1,rs2;
             st = cn.createStatement();
             st2 = cn.createStatement();
-            rs1 = st.executeQuery(Contar_Disponible);
+            rs1 = st.executeQuery(Contar_Disponible); // Se ejecuta la query que cuenta los folios en la tabla productos que no se encuentren en la tabla de orden_producto y además que su descripción coincida con la seleccionada.
             while (rs1.next())    
-                Cantidad = rs1.getInt(1);
-            if(Cantidad >= Integer.parseInt(jSpinner1.getValue().toString())){
-                System.err.println("SE ENTRÓ AL IF");
-                this.C1.RegristarCliente();
-                System.err.println("SE REGISTRÓ EL CLIENTE");
-                this.C2.RegristarConductor();
-                System.err.println("SE REGISTRÓ EL CONDUCTOR");
-                this.C3.RegistrarOrden(Num_Empleado,C2.getNo_Entrada(),C1.getRFC(),jTextArea1.getText());
+                Cantidad = rs1.getInt(1); //Se recupera el resultado de la consulta
+            if(Cantidad >= Integer.parseInt(jSpinner1.getValue().toString())){ //Si la cantidad de producto solicidato es menos o igual a la cantidad existente, procede a registar la orden
+                this.C1.RegristarCliente(); //Se llama a la entidad Cliente para que ejecute RegistrarCliente
+                this.C2.RegristarConductor(); //Se llama a la entidad Conductor para que ejecute RegistrarConductor;
+                this.C3.RegistrarOrden(Num_Empleado,C2.getNo_Entrada(),C1.getRFC(),jTextArea1.getText()); //Se llama a la entidad Orden para que ejecute RegistrarOrden
                 rs2 = st2.executeQuery(Buscar_Disponible);
                 for (int i = 0; i < Integer.parseInt(jSpinner1.getValue().toString()); i++) {
                     while (rs2.next()){
@@ -161,7 +163,7 @@ public class Order_acto_two extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "La orden se regristro correctamente");
                 this.dispose();
                 Init_S NIS = new Init_S();
-            }else{
+            }else{//Si la cantidad de producto solicidato es mayor a la cantidad existente, se indica que no es posible terminar el registro.
                 JOptionPane.showMessageDialog(this, "No hay suficiente existencia de ésta presentación para satisfacer la orden");
             }
         } catch (Exception e) {

@@ -3,12 +3,19 @@ package asg.tools;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.regex.*;
 
 public class ValidaFormato{
 
     public static boolean VNombre (String Nombre){
         return Nombre.matches("[A-Z][[a-z]+[\\s]?]+"); //Compara si determinada cadena coincide con el formato para el campo Nombre.
+        //En caso de coincidir devuelve True, de lo contrario devuelve False
+    }
+    public static boolean VNombreCompleto (String Nombre){
+        return Nombre.matches("([A-Z]+[[a-z]+[\\s]?]+)+"); //Compara si determinada cadena coincide con el formato para el campo Nombre.
+        //En caso de coincidir devuelve True, de lo contrario devuelve False
+    }
+    public static boolean VRFC (String Nombre){
+        return Nombre.matches("([A-Z]{3}[[a-z]+[\\s]?]+)+"); //Compara si determinada cadena coincide con el formato para el campo Nombre.
         //En caso de coincidir devuelve True, de lo contrario devuelve False
     }
     public static boolean VApellido (String Apellido){ //Compara si determinada cadena coincide con el formato para el campo Apellido.

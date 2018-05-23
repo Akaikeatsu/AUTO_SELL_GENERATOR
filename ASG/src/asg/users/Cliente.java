@@ -34,31 +34,7 @@ public class Cliente {
         this.RFC = Temp.getRFC();
         this.Direccion_Destino = Temp.getDireccion_Destino();
     }
-    
-    public void ImprimirDatos(){
-        System.err.println(this.getNombre()+" "+this.getRazon_Social()+" "+this.getTelefono()+" "+this.RFC+" "+this.getDireccion_Destino());
-    }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
-    }
-
-    public void setRazon_Social(String Razon_Social) {
-        this.Razon_Social = Razon_Social;
-    }
-
-    public void setTelefono(String Telefono) {
-        this.Telefono = Telefono;
-    }
-
-    public void setRFC(String RFC) {
-        this.RFC = RFC;
-    }
-
-    public void setDireccion_Destino(String Direccion_Destino) {
-        this.Direccion_Destino = Direccion_Destino;
-    }
-    
     public void RegristarCliente(){
         try {
             JDBSConectionTools CT = new JDBSConectionTools();

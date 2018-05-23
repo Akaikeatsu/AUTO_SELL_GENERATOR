@@ -24,22 +24,6 @@ public class Orden {
         this.Estado_Pedido = Estado_Pedido;
     }
     
-    public void ImprimirDatos(){
-        System.err.println(this.Folio+" "+this.Tipo_Envio+" "+this.Estado_Pedido);
-    }
-
-    public void setFolio(String Folio) {
-        this.Folio = Folio;
-    }
-
-    public void setTipo_Envio(String Tipo_Envio) {
-        this.Tipo_Envio = Tipo_Envio;
-    }
-
-    public void setEstado_Pedido(String Estado_Pedido) {
-        this.Estado_Pedido = Estado_Pedido;
-    }
-    
     public boolean RegistrarOrden (String no_empleado,String conductor,String cliente,String descripcion){
         try {
             JDBSConectionTools CT = new JDBSConectionTools();

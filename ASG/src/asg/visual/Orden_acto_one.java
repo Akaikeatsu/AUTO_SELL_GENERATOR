@@ -12,27 +12,16 @@ public class Orden_acto_one extends javax.swing.JFrame {
     
     private String Num_Empleado;
 
-    public Orden_acto_one(String Num_Empleado) {
-        initComponents();
+    public Orden_acto_one(String Num_Empleado) {    //Metodo Constructor recibe como parametro el número del empledo que genera la orden
+        initComponents();                           //Se inicializan los componentes del frame
         this.setLocationRelativeTo(null);
-        Date date = new Date();
-        DateFormat hourdateFormat = new SimpleDateFormat("ddMMyyHHmmss");
-        String Genfolio = hourdateFormat.format(date);
-        folio.setText(Genfolio);
-        this.setVisible(true);
-        this.Num_Empleado = Num_Empleado;
+        Date date = new Date();                     //Se inicializa una nueva variable de tipo Date
+        DateFormat hourdateFormat = new SimpleDateFormat("ddMMyyHHmmss");   //Se genera un formato de 12 carateres con la variable date
+        String Genfolio = hourdateFormat.format(date);  //La cadena de 12 caracteres se almancena en un String
+        folio.setText(Genfolio);                        //La cadena de 12 caracteres se coloca en la etiqueta folio del menú
+        this.setVisible(true);                          
+        this.Num_Empleado = Num_Empleado;               //Se almacena el numero de empleado que genera la orden
     }
-    
-    public Orden_acto_one() {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        Date date = new Date();
-        DateFormat hourdateFormat = new SimpleDateFormat("ddMMyyHHmmss");
-        String Genfolio = hourdateFormat.format(date);
-        folio.setText(Genfolio);
-        this.setVisible(true);
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -278,16 +267,25 @@ public class Orden_acto_one extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void gnerateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gnerateMouseClicked
-        try {
-            Orden TempOrden = new Orden(folio.getText(),jComboBox1.getSelectedItem().toString(),"Pendiente");
-            Cliente TempCliente = new Cliente(name_client.getText(), raz_soc.getText(), tel.getText(), rfc.getText(), destino.getText());
-            Conductor TempConductor = new Conductor(name_tranp.getText(), linea.getText(), entrada.getText(), ticket.getText(), placa.getText());
-            Order_acto_two NewOrtw = new Order_acto_two(this, rootPaneCheckingEnabled, TempCliente, TempConductor, TempOrden,Num_Empleado);
-            this.dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Verifique que no existan campos vacios");
-        }
-        
+        /**
+         * Al hacer click en el boton de generar orden. Se valida que no existan campos vacios.
+         * Se construye una orden, un cliente y conductor con los campos del formulario.
+         * Se genera la segunda parte de la orden a la cual se le envían las entidades generadas
+         * así como el número de empleado que fue recibido de la clase anterior
+         */
+        if(ComprobarCamposVacios()){//Llama al metodo que comprueba que no existan campos vacios
+            try {
+                Orden TempOrden = new Orden(folio.getText(),jComboBox1.getSelectedItem().toString(),"Pendiente");
+                Cliente TempCliente = new Cliente(name_client.getText(), raz_soc.getText(), tel.getText(), rfc.getText(), destino.getText());
+                Conductor TempConductor = new Conductor(name_tranp.getText(), linea.getText(), entrada.getText(), ticket.getText(), placa.getText());
+                Order_acto_two NewOrtw = new Order_acto_two(this, rootPaneCheckingEnabled, TempCliente, TempConductor, TempOrden,Num_Empleado);
+                this.dispose();
+            } catch (Exception e) {
+
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Confirme que no existan campos vacíos");
+        }        
     }//GEN-LAST:event_gnerateMouseClicked
 
     private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
@@ -295,39 +293,19 @@ public class Orden_acto_one extends javax.swing.JFrame {
         Init_S NIS = new Init_S();
     }//GEN-LAST:event_cancelMouseClicked
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Orden_acto_one().setVisible(true);
-            }
-        });
+    private boolean ComprobarCamposVacios(){ //Evalua el contenido de todos los campos de texto y se asegura de que ninguno sea vacio
+        return  !(name_client.getText().equals("")&&
+                raz_soc.getText().equals("")&&
+                tel.getText().equals("")&&
+                rfc.getText().equals("")&&
+                destino.getText().equals("")&&
+                name_tranp.getText().equals("")&&
+                linea.getText().equals("")&&
+                entrada.getText().equals("")&&
+                placa.getText().equals("")&&
+                ticket.getText().equals(""));
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
     private javax.swing.JTextField destino;

@@ -121,6 +121,13 @@ public class Init_S extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Generando sesion de usuario");//En caso de encontrar un Match en la base de datos. Genera una sesión de Generar Orden_acto_one con los Datos del Usuario. WIP
                 JDBSConectionTools CT = new JDBSConectionTools();                
                 try {
+                    /**En caso de encontrar la coincidencia se hace una busqueda para recuperar el numero de usuario
+                     * del usuario que está iniciando sesión.
+                     * 
+                     * Se pasa como pararametro a la primera parte del formulario
+                     * 
+                     * Se cierra esta ventana
+                     */
                     Connection cn = CT.ConnectionTool();
                     Statement st = cn.createStatement();
                     ResultSet rs1 = st.executeQuery("SELECT no_empleado FROM usuario WHERE nombre_usuario = '"+user.getText()+"' AND password = '"+pass+"'");
@@ -128,8 +135,8 @@ public class Init_S extends javax.swing.JFrame {
                         no_empleado =rs1.getString(1);
                     System.err.println(no_empleado);
                     Orden_acto_one GenOrTemp = new Orden_acto_one(no_empleado);
-                this.dispose();
-                } catch (SQLException ex) {
+                    this.dispose();
+                } catch (SQLException ex) { 
                     Logger.getLogger(Init_S.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

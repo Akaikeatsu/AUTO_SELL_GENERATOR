@@ -1,11 +1,39 @@
 package asg.visual;
 
-public class Order_acto_two extends javax.swing.JDialog {
+import asg.tools.JDBSConectionTools;
+import asg.users.Cliente;
+import asg.users.Conductor;
+import asg.users.Orden;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
-    public Order_acto_two(java.awt.Frame parent, boolean modal) {
+public class Order_acto_two extends javax.swing.JDialog {
+    
+    private final Cliente C1;
+    private final Conductor C2;
+    private final Orden C3;
+    private final String Num_Empleado;
+    
+    public Order_acto_two(java.awt.Frame parent, boolean modal, Cliente T1, Conductor T2, Orden T3,String Num_Empleado) {
+        /**
+         * Método constructor que recibe como parametro
+         * Un objeto de tipo cliente
+         * Un objeto de tipo conductor
+         * Un objeto de tipo Orden
+         * Un String que contiene el numero de empleado que genera la orden
+         * Se almacena en variables locales.
+         */
         super(parent, modal);
+        C1=T1;
+        C2=T2;
+        C3=T3;
+        this.Num_Empleado = Num_Empleado;
+        System.out.println(this.Num_Empleado);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setVisible(true);        
     }
 
     @SuppressWarnings("unchecked")
@@ -31,7 +59,7 @@ public class Order_acto_two extends javax.swing.JDialog {
         jPanel1.setLayout(null);
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100 Unidades", "1 lb", "2 lb", "4 lb", "8 lb", "25 lb", "50 lb", "50 Kg" }));
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(290, 20, 240, 28);
 
@@ -67,11 +95,21 @@ public class Order_acto_two extends javax.swing.JDialog {
 
         enviar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         enviar.setText("Enviar");
+        enviar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                enviarMouseClicked(evt);
+            }
+        });
         jPanel1.add(enviar);
         enviar.setBounds(310, 360, 90, 31);
 
         cancel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         cancel.setText("Cancelar");
+        cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelMouseClicked(evt);
+            }
+        });
         jPanel1.add(cancel);
         cancel.setBounds(410, 360, 110, 31);
 
@@ -93,44 +131,50 @@ public class Order_acto_two extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
+        this.dispose();
+        Init_S NIS = new Init_S();
+    }//GEN-LAST:event_cancelMouseClicked
+
+    private void enviarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_enviarMouseClicked
+        String Contar_Disponible = "SELECT COUNT (folio) FROM public.producto WHERE folio NOT IN (SELECT productofolio FROM public.orden_de_pedido_producto) AND descripcion = '"+jComboBox1.getSelectedItem().toString()+"';";
+        String Buscar_Disponible = "SELECT folio FROM public.producto WHERE folio NOT IN (SELECT productofolio FROM public.orden_de_pedido_producto) AND descripcion = '"+jComboBox1.getSelectedItem().toString()+"';";
+        int Cantidad=0;
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Order_acto_two.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Order_acto_two.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Order_acto_two.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Order_acto_two.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Order_acto_two dialog = new Order_acto_two(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
+            JDBSConectionTools CT = new JDBSConectionTools();
+            Connection cn = CT.ConnectionTool();
+            Statement st,st2;
+            ResultSet rs1,rs2;
+            st = cn.createStatement();
+            st2 = cn.createStatement();
+            rs1 = st.executeQuery(Contar_Disponible); // Se ejecuta la query que cuenta los folios en la tabla productos que no se encuentren en la tabla de orden_producto y además que su descripción coincida con la seleccionada.
+            while (rs1.next())    
+                Cantidad = rs1.getInt(1); //Se recupera el resultado de la consulta
+            if(Cantidad >= Integer.parseInt(jSpinner1.getValue().toString())){ //Si la cantidad de producto solicidato es menos o igual a la cantidad existente, procede a registar la orden
+                this.C1.RegristarCliente(); //Se llama a la entidad Cliente para que ejecute RegistrarCliente
+                this.C2.RegristarConductor(); //Se llama a la entidad Conductor para que ejecute RegistrarConductor;
+                this.C3.RegistrarOrden(Num_Empleado,C2.getNo_Entrada(),C1.getRFC(),jTextArea1.getText()); //Se llama a la entidad Orden para que ejecute RegistrarOrden
+                rs2 = st2.executeQuery(Buscar_Disponible);
+                for (int i = 0; i < Integer.parseInt(jSpinner1.getValue().toString()); i++) {
+                    while (rs2.next()){
+                        CT.QueryTool("INSERT INTO public.orden_de_pedido_producto(orden_de_pedidofolio, productofolio)VALUES ('"+C3.getFolio()+"', '"+rs2.getString(1)+"');"); /*Ejecuta el query para atualozar el estado del pedido*/
                     }
-                });
-                dialog.setVisible(true);
+                }
+                JOptionPane.showMessageDialog(this, "La orden se regristro correctamente");
+                this.dispose();
+                Init_S NIS = new Init_S();
+            }else{//Si la cantidad de producto solicidato es mayor a la cantidad existente, se indica que no es posible terminar el registro.
+                JOptionPane.showMessageDialog(this, "No hay suficiente existencia de ésta presentación para satisfacer la orden");
             }
-        });
-    }
-
+        } catch (Exception e) {
+            System.err.println("ALGO SAlIO MAL" +e);
+            e.printStackTrace();
+        }finally{
+            JOptionPane.showMessageDialog(this, "Cerrando Sesión");
+        }
+        
+    }//GEN-LAST:event_enviarMouseClicked
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
     private javax.swing.JButton enviar;

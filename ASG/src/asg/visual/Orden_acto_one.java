@@ -1,15 +1,27 @@
 package asg.visual;
 
-import asg.users.Usuario;
+import asg.users.Cliente;
+import asg.users.Conductor;
+import asg.users.Orden;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
-public class Orden extends javax.swing.JFrame {
+public class Orden_acto_one extends javax.swing.JFrame {
+    
+    private String Num_Empleado;
 
-    public Orden() {
-        initComponents();
+    public Orden_acto_one(String Num_Empleado) {    //Metodo Constructor recibe como parametro el número del empledo que genera la orden
+        initComponents();                           //Se inicializan los componentes del frame
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        Date date = new Date();                     //Se inicializa una nueva variable de tipo Date
+        DateFormat hourdateFormat = new SimpleDateFormat("ddMMyyHHmmss");   //Se genera un formato de 12 carateres con la variable date
+        String Genfolio = hourdateFormat.format(date);  //La cadena de 12 caracteres se almancena en un String
+        folio.setText(Genfolio);                        //La cadena de 12 caracteres se coloca en la etiqueta folio del menú
+        this.setVisible(true);                          
+        this.Num_Empleado = Num_Empleado;               //Se almacena el numero de empleado que genera la orden
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -70,7 +82,7 @@ public class Orden extends javax.swing.JFrame {
         folio.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         folio.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(folio);
-        folio.setBounds(100, 20, 140, 30);
+        folio.setBounds(100, 20, 300, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,17 +222,27 @@ public class Orden extends javax.swing.JFrame {
         jLabel24.setBounds(20, 650, 170, 30);
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nacional", "Internacional" }));
         jPanel1.add(jComboBox1);
         jComboBox1.setBounds(190, 650, 170, 30);
 
         gnerate.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         gnerate.setText("Generar");
+        gnerate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gnerateMouseClicked(evt);
+            }
+        });
         jPanel1.add(gnerate);
         gnerate.setBounds(250, 700, 110, 40);
 
         cancel.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         cancel.setText("Cancelar");
+        cancel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cancelMouseClicked(evt);
+            }
+        });
         jPanel1.add(cancel);
         cancel.setBounds(380, 700, 110, 40);
 
@@ -238,45 +260,52 @@ public class Orden extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 767, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+    private void gnerateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gnerateMouseClicked
+        /**
+         * Al hacer click en el boton de generar orden. Se valida que no existan campos vacios.
+         * Se construye una orden, un cliente y conductor con los campos del formulario.
+         * Se genera la segunda parte de la orden a la cual se le envían las entidades generadas
+         * así como el número de empleado que fue recibido de la clase anterior
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Orden.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+        if(ComprobarCamposVacios()){//Llama al metodo que comprueba que no existan campos vacios
+            try {
+                Orden TempOrden = new Orden(folio.getText(),jComboBox1.getSelectedItem().toString(),"Pendiente");
+                Cliente TempCliente = new Cliente(name_client.getText(), raz_soc.getText(), tel.getText(), rfc.getText(), destino.getText());
+                Conductor TempConductor = new Conductor(name_tranp.getText(), linea.getText(), entrada.getText(), ticket.getText(), placa.getText());
+                Order_acto_two NewOrtw = new Order_acto_two(this, rootPaneCheckingEnabled, TempCliente, TempConductor, TempOrden,Num_Empleado);
+                this.dispose();
+            } catch (Exception e) {
 
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Orden().setVisible(true);
             }
-        });
+        }else{
+            JOptionPane.showMessageDialog(null, "Confirme que no existan campos vacíos");
+        }        
+    }//GEN-LAST:event_gnerateMouseClicked
+
+    private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
+        this.dispose();
+        Init_S NIS = new Init_S();
+    }//GEN-LAST:event_cancelMouseClicked
+
+    private boolean ComprobarCamposVacios(){ //Evalua el contenido de todos los campos de texto y se asegura de que ninguno sea vacio
+        return  !(name_client.getText().equals("")&&
+                raz_soc.getText().equals("")&&
+                tel.getText().equals("")&&
+                rfc.getText().equals("")&&
+                destino.getText().equals("")&&
+                name_tranp.getText().equals("")&&
+                linea.getText().equals("")&&
+                entrada.getText().equals("")&&
+                placa.getText().equals("")&&
+                ticket.getText().equals(""));
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
     private javax.swing.JTextField destino;
